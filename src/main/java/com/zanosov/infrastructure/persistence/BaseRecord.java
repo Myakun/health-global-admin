@@ -1,6 +1,7 @@
 package com.zanosov.infrastructure.persistence;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.Hibernate;
 import org.jspecify.annotations.NonNull;
 import org.jspecify.annotations.Nullable;
@@ -9,6 +10,7 @@ import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
+@Getter
 @MappedSuperclass
 public abstract class BaseRecord<T extends BaseRecord<T>> {
 
@@ -22,28 +24,16 @@ public abstract class BaseRecord<T extends BaseRecord<T>> {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    public Instant getCreatedAt() {
-        return createdAt;
-    }
-
     @SuppressWarnings("unchecked")
     public T setCreatedAt(@NonNull Instant createdAt) {
         this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
         return (T) this;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
     @SuppressWarnings("unchecked")
     public T setId(@NonNull UUID id) {
         this.id = Objects.requireNonNull(id, "id must not be null");
         return (T) this;
-    }
-
-    public Instant getUpdatedAt() {
-        return updatedAt;
     }
 
     @SuppressWarnings("unchecked")
