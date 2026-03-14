@@ -1,0 +1,94 @@
+package com.zanosov.infrastructure.persistence;
+
+import jakarta.persistence.*;
+import org.hibernate.Hibernate;
+import org.jspecify.annotations.NonNull;
+import org.jspecify.annotations.Nullable;
+
+import java.time.Instant;
+import java.util.Objects;
+import java.util.UUID;
+
+@MappedSuperclass
+public abstract class BaseRecord<T extends BaseRecord<T>> {
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;
+
+    @Id
+    @Column(name = "id", nullable = false, updatable = false)
+    private UUID id;
+
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T setCreatedAt(@NonNull Instant createdAt) {
+        this.createdAt = Objects.requireNonNull(createdAt, "createdAt must not be null");
+        return (T) this;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T setId(@NonNull UUID id) {
+        this.id = Objects.requireNonNull(id, "id must not be null");
+        return (T) this;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    @SuppressWarnings("unchecked")
+    public T setUpdatedAt(@NonNull Instant updatedAt) {
+        this.updatedAt = Objects.requireNonNull(updatedAt, "updatedAt must not be null");
+        return (T) this;
+    }
+
+    @PrePersist
+    protected void prePersist() {
+        var now = Instant.now();
+
+        if (createdAt == null) {
+            createdAt = now;
+        }
+
+        if (updatedAt == null) {
+            updatedAt = now;
+        }
+    }
+
+    @PreUpdate
+    protected void preUpdate() {
+        updatedAt = Instant.now();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof BaseRecord<?> that)) {
+            return false;
+        }
+
+        if (!getClass().equals(Hibernate.getClass(obj))) {
+            return false;
+        }
+
+        return id.equals(that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+}
