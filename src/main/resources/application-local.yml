@@ -1,0 +1,6 @@
+# Flyway local strategy: modify V001__schema.sql freely,
+# Flyway detects checksum mismatch → cleans DB → re-runs
+spring:
+  flyway:
+    clean-disabled: ${FLYWAY_CLEAN_DISABLED:true}
+    clean-on-validation-error: ${FLYWAY_CLEAN_ON_VALIDATION_ERROR:false}
