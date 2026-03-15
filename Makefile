@@ -22,7 +22,7 @@ migrate:
 	./gradlew flywayMigrate
 
 migrate-clean:
-	./gradlew flywayClean flywayMigrate
+	./gradlew flywayClean
 
 migrate-info:
 	./gradlew flywayInfo
