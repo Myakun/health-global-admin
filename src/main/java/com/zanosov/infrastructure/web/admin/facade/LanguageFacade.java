@@ -36,6 +36,15 @@ public class LanguageFacade {
         return LanguageDto.of(languageService.create(command));
     }
 
+    @Transactional
+    public void deleteById(UUID id) {
+        try {
+            languageService.deleteById(id);
+        } catch (LanguageNotFoundException ex) {
+            // Language already deleted?
+        }
+    }
+
     @Transactional(readOnly = true)
     public LanguageDto findById(UUID id) {
         return languageService.findById(id)

@@ -25,6 +25,11 @@ class LanguageRepositoryAdapter implements LanguageRepository {
     }
 
     @Override
+    public void delete(Language language) {
+        jpaRepository.delete(LanguageRecord.fromDomain(language));
+    }
+
+    @Override
     public boolean existsByCode(LanguageCode code) {
         return jpaRepository.existsByCode(code.value());
     }

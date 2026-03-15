@@ -5,6 +5,7 @@ import com.zanosov.infrastructure.web.admin.dto.LanguageDto;
 import com.zanosov.infrastructure.web.admin.facade.LanguageFacade;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,12 @@ public class LanguageAdminController {
     @ResponseStatus(HttpStatus.CREATED)
     public LanguageDto create(@Valid @RequestBody CreateLanguageRequest request) {
         return languageFacade.create(request);
+    }
+
+    @DeleteMapping("/admin/languages/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteById(@PathVariable UUID id) {
+        languageFacade.deleteById(id);
     }
 
     @GetMapping("/admin/languages/{id}")

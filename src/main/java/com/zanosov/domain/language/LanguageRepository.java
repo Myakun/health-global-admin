@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public interface LanguageRepository {
 
+    void delete(Language language);
+
     boolean existsByCode(LanguageCode code);
 
     boolean existsByCodeAndIdNot(LanguageCode code, UUID id);
