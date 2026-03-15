@@ -32,7 +32,7 @@ class LanguageTranslationTest {
         @Test
         void shouldThrowWhenSourceLanguageIdIsNull() {
             //noinspection DataFlowIssue
-            assertThatThrownBy(() -> new LanguageTranslation(now, id, "English", null, translationLanguageId, now))
+            assertThatThrownBy(() -> new LanguageTranslation(now, id, new LanguageTranslationName("English"), null, translationLanguageId, now))
                     .isInstanceOf(NullPointerException.class)
                     .hasMessage("sourceLanguageId must not be null");
         }
@@ -40,7 +40,7 @@ class LanguageTranslationTest {
         @Test
         void shouldThrowWhenTranslationLanguageIdIsNull() {
             //noinspection DataFlowIssue
-            assertThatThrownBy(() -> new LanguageTranslation(now, id, "English", sourceLanguageId, null, now))
+            assertThatThrownBy(() -> new LanguageTranslation(now, id, new LanguageTranslationName("English"), sourceLanguageId, null, now))
                     .isInstanceOf(NullPointerException.class)
                     .hasMessage("translationLanguageId must not be null");
         }
