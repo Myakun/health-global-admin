@@ -8,8 +8,11 @@ import com.zanosov.domain.language.LanguageCode;
 import com.zanosov.domain.language.LanguageName;
 import com.zanosov.infrastructure.web.admin.controller.language.CreateLanguageRequest;
 import com.zanosov.infrastructure.web.admin.dto.LanguageDto;
+import com.zanosov.infrastructure.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Service
 public class LanguageFacade {
@@ -28,6 +31,13 @@ public class LanguageFacade {
         );
 
         return LanguageDto.of(languageService.create(command));
+    }
+
+    @Transactional(readOnly = true)
+    public LanguageDto findById(UUID id) {
+        return languageService.findById(id)
+                .map(LanguageDto::of)
+                .orElseThrow(() -> new ObjectNotFoundException(Language.class, id));
     }
 
     @Transactional(readOnly = true)

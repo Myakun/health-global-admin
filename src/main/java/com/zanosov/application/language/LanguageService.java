@@ -9,6 +9,8 @@ import com.zanosov.domain.language.LanguageRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class LanguageService {
@@ -36,6 +38,10 @@ public class LanguageService {
         var language = new Language(command.code(), now, idGenerator.generate(), command.name(), position, now);
 
         return languageRepository.save(language);
+    }
+
+    public Optional<Language> findById(UUID id) {
+        return languageRepository.findById(id);
     }
 
     public PageResult<Language> listOrderedByPosition(int page, int size) {

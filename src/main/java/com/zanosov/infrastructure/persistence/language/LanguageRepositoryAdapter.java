@@ -12,6 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
 class LanguageRepositoryAdapter implements LanguageRepository {
 
@@ -40,6 +43,11 @@ class LanguageRepositoryAdapter implements LanguageRepository {
                 result.getTotalElements(),
                 result.getTotalPages()
         );
+    }
+
+    @Override
+    public Optional<Language> findById(UUID id) {
+        return jpaRepository.findById(id).map(LanguageRecord::toDomain);
     }
 
     @Override
