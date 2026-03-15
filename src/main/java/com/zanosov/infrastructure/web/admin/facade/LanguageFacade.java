@@ -1,8 +1,12 @@
 package com.zanosov.infrastructure.web.admin.facade;
 
+import com.zanosov.application.language.CreateLanguageCommand;
 import com.zanosov.application.language.LanguageService;
 import com.zanosov.domain.PageResult;
 import com.zanosov.domain.language.Language;
+import com.zanosov.domain.language.LanguageCode;
+import com.zanosov.domain.language.LanguageName;
+import com.zanosov.infrastructure.web.admin.controller.language.CreateLanguageRequest;
 import com.zanosov.infrastructure.web.admin.dto.LanguageDto;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,6 +18,16 @@ public class LanguageFacade {
 
     public LanguageFacade(LanguageService languageService) {
         this.languageService = languageService;
+    }
+
+    @Transactional
+    public LanguageDto create(CreateLanguageRequest request) {
+        var command = new CreateLanguageCommand(
+                new LanguageCode(request.code()),
+                new LanguageName(request.name())
+        );
+
+        return LanguageDto.of(languageService.create(command));
     }
 
     @Transactional(readOnly = true)
