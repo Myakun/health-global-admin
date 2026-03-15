@@ -41,7 +41,7 @@ public class LanguageFacade {
         try {
             languageService.deleteById(id);
         } catch (LanguageNotFoundException ex) {
-            // Language already deleted?
+            throw new ObjectNotFoundException(Language.class, id);
         }
     }
 
