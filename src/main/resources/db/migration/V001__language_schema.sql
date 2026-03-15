@@ -16,7 +16,7 @@ CREATE TABLE languages
 CREATE TABLE language_translations
 (
     id                      UUID         NOT NULL,
-    name                    VARCHAR(100) NOT NULL,
+    name                    VARCHAR(50)  NOT NULL,
     source_language_id      UUID         NOT NULL,
     translation_language_id UUID         NOT NULL,
     created_at              TIMESTAMPTZ  NOT NULL DEFAULT now(),
