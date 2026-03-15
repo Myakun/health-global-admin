@@ -3,9 +3,14 @@ package com.zanosov.infrastructure.web.admin.controller.language;
 import com.zanosov.domain.PageResult;
 import com.zanosov.infrastructure.web.admin.dto.LanguageDto;
 import com.zanosov.infrastructure.web.admin.facade.LanguageFacade;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -18,6 +23,12 @@ public class LanguageAdminController {
 
     public LanguageAdminController(LanguageFacade languageFacade) {
         this.languageFacade = languageFacade;
+    }
+
+    @PostMapping("/admin/languages")
+    @ResponseStatus(HttpStatus.CREATED)
+    public LanguageDto create(@Valid @RequestBody CreateLanguageRequest request) {
+        return languageFacade.create(request);
     }
 
     @GetMapping("/admin/languages")

@@ -21,6 +21,31 @@ public class LanguageRecord extends BaseRecord<LanguageRecord> {
     @Column(name = "position", nullable = false)
     private int position;
 
+    public LanguageRecord setCode(String code) {
+        this.code = code;
+        return this;
+    }
+
+    public LanguageRecord setName(String name) {
+        this.name = name;
+        return this;
+    }
+
+    public LanguageRecord setPosition(int position) {
+        this.position = position;
+        return this;
+    }
+
+    public static LanguageRecord fromDomain(Language language) {
+        return new LanguageRecord()
+                .setId(language.getId())
+                .setCode(language.getCode().value())
+                .setName(language.getName().value())
+                .setPosition(language.getPosition())
+                .setCreatedAt(language.getCreatedAt())
+                .setUpdatedAt(language.getUpdatedAt());
+    }
+
     public Language toDomain() {
         return new Language(new LanguageCode(code), getCreatedAt(), getId(), new LanguageName(name), position, getUpdatedAt());
     }
