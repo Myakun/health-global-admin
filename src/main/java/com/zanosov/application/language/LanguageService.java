@@ -41,6 +41,13 @@ public class LanguageService {
         return languageRepository.save(language);
     }
 
+    public void deleteById(UUID id) {
+        Language language = languageRepository.findById(id)
+                .orElseThrow(() -> new LanguageNotFoundException(id));
+
+        languageRepository.delete(language);
+    }
+
     public Optional<Language> findById(UUID id) {
         return languageRepository.findById(id);
     }
