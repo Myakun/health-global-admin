@@ -1,0 +1,69 @@
+### Languages list
+GET http://{{domain}}/admin/languages
+Accept: application/json
+Accept-Language: en
+
+### Get language by id
+GET http://{{domain}}/admin/languages/{{languageId}}
+Accept: application/json
+Accept-Language: en
+
+### Create language
+POST http://{{domain}}/admin/languages
+Accept: application/json
+Accept-Language: en
+Content-Type: application/json
+
+{
+  "code": "te",
+  "name": "Test language"
+}
+
+### Create language - missing body (expect 400)
+POST http://{{domain}}/admin/languages
+Accept: application/json
+Accept-Language: en
+Content-Type: application/json
+
+### Update language
+PUT http://{{domain}}/admin/languages/{{languageId}}
+Accept: application/json
+Accept-Language: en
+Content-Type: application/json
+
+{
+  "code": "nt",
+  "name": "New test language"
+}
+
+### Update language - invalid UUID (expect 400)
+PUT http://{{domain}}/admin/languages/not-a-valid-uuid
+Accept: application/json
+Accept-Language: en
+Content-Type: application/json
+
+{
+  "code": "nt",
+  "name": "New test language"
+}
+
+### Update language - not found (expect 404)
+PUT http://{{domain}}/admin/languages/00000000-0000-0000-0000-000000000000
+Accept: application/json
+Accept-Language: en
+Content-Type: application/json
+
+{
+  "code": "nt",
+  "name": "New test language"
+}
+
+### Delete language
+DELETE http://{{domain}}/admin/languages/{{languageId}}
+Accept: application/json
+Accept-Language: en
+
+### Delete language - not found (expect 404)
+DELETE http://{{domain}}/admin/languages/{{languageId}}
+Accept: application/json
+Accept-Language: en

@@ -45,3 +45,5 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+/docs/http/http-client.env.json
