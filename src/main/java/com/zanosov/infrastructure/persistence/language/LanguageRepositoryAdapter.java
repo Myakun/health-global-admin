@@ -30,8 +30,18 @@ class LanguageRepositoryAdapter implements LanguageRepository {
     }
 
     @Override
+    public boolean existsByCodeAndIdNot(LanguageCode code, UUID id) {
+        return jpaRepository.existsByCodeAndIdNot(code.value(), id);
+    }
+
+    @Override
     public boolean existsByName(LanguageName name) {
         return jpaRepository.existsByName(name.value());
+    }
+
+    @Override
+    public boolean existsByNameAndIdNot(LanguageName name, UUID id) {
+        return jpaRepository.existsByNameAndIdNot(name.value(), id);
     }
 
     @Override
