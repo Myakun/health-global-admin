@@ -1,5 +1,6 @@
 package com.zanosov.infrastructure.persistence;
 
+import com.fasterxml.uuid.Generators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import org.hibernate.Hibernate;
@@ -19,7 +20,7 @@ public abstract class BaseRecord<T extends BaseRecord<T>> {
 
     @Id
     @Column(name = "id", nullable = false, updatable = false)
-    private UUID id;
+    private UUID id = Generators.timeBasedEpochGenerator().generate();
 
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
@@ -79,6 +80,6 @@ public abstract class BaseRecord<T extends BaseRecord<T>> {
 
     @Override
     public int hashCode() {
-        return id.hashCode();
+        return id.hashCode(); // id never null — generated at field init
     }
 }
