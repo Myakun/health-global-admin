@@ -1,0 +1,16 @@
+name: health-global-admin
+
+services:
+  postgresql:
+    container_name: health-global-admin-postgresql
+    environment:
+      PGDATA: /data/postgresql
+      POSTGRES_DB: ${APP_POSTGRES_DB:-main}
+      POSTGRES_USER: ${APP_POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${APP_POSTGRES_PASS:-password}
+    build: ./docker/postgresql
+    ports:
+      - "${APP_POSTGRES_PORT}:5432"
+    volumes:
+      - ./data/postgresql:/data/postgresql:z
+    restart: always

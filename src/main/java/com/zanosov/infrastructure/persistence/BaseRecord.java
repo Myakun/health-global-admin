@@ -70,7 +70,7 @@ public abstract class BaseRecord<T extends BaseRecord<T>> {
             return false;
         }
 
-        if (!getClass().equals(Hibernate.getClass(obj))) {
+        if (!Hibernate.getClass(this).equals(Hibernate.getClass(obj))) {
             return false;
         }
 

@@ -1,25 +1,25 @@
 package com.zanosov.domain.language;
 
+import com.zanosov.domain.BaseEntity;
+import lombok.Getter;
+import org.jspecify.annotations.NonNull;
+
 import java.time.Instant;
 import java.util.Objects;
 import java.util.UUID;
 
-import lombok.Getter;
-import com.zanosov.domain.BaseEntity;
-import org.jspecify.annotations.NonNull;
-
 @Getter
 public class LanguageTranslation extends BaseEntity {
-    private final UUID sourceLanguageId;
+    private final LanguageTranslationName name;
 
-    private final String name;
+    private final UUID sourceLanguageId;
 
     private final UUID translationLanguageId;
 
     public LanguageTranslation(
             @NonNull Instant createdAt,
             @NonNull UUID id,
-            @NonNull String name,
+            @NonNull LanguageTranslationName name,
             @NonNull UUID sourceLanguageId,
             @NonNull UUID translationLanguageId,
             @NonNull Instant updatedAt) {
