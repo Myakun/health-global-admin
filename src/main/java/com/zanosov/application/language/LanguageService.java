@@ -5,6 +5,7 @@ import com.zanosov.domain.PageResult;
 import com.zanosov.domain.language.Language;
 import com.zanosov.domain.language.LanguageCodeAlreadyExistsException;
 import com.zanosov.domain.language.LanguageNameAlreadyExistsException;
+import com.zanosov.domain.language.LanguageNotFoundException;
 import com.zanosov.domain.language.LanguageRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,5 +47,22 @@ public class LanguageService {
 
     public PageResult<Language> listOrderedByPosition(int page, int size) {
         return languageRepository.findAllOrderedByPosition(page, size);
+    }
+
+    public Language update(UpdateLanguageCommand command) {
+        Language language = languageRepository.findById(command.id())
+                .orElseThrow(() -> new LanguageNotFoundException(command.id()));
+
+        if (languageRepository.existsByCodeAndIdNot(command.code(), command.id())) {
+            throw new LanguageCodeAlreadyExistsException(command.code().value());
+        }
+
+        if (languageRepository.existsByNameAndIdNot(command.name(), command.id())) {
+            throw new LanguageNameAlreadyExistsException(command.name().value());
+        }
+
+        var updated = new Language(command.code(), language.getCreatedAt(), language.getId(), command.name(), language.getPosition(), Instant.now());
+
+        return languageRepository.save(updated);
     }
 }

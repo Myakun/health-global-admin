@@ -2,11 +2,14 @@ package com.zanosov.infrastructure.web.admin.facade;
 
 import com.zanosov.application.language.CreateLanguageCommand;
 import com.zanosov.application.language.LanguageService;
+import com.zanosov.application.language.UpdateLanguageCommand;
 import com.zanosov.domain.PageResult;
 import com.zanosov.domain.language.Language;
 import com.zanosov.domain.language.LanguageCode;
 import com.zanosov.domain.language.LanguageName;
+import com.zanosov.domain.language.LanguageNotFoundException;
 import com.zanosov.infrastructure.web.admin.controller.language.CreateLanguageRequest;
+import com.zanosov.infrastructure.web.admin.controller.language.UpdateLanguageRequest;
 import com.zanosov.infrastructure.web.admin.dto.LanguageDto;
 import com.zanosov.infrastructure.web.exception.ObjectNotFoundException;
 import org.springframework.stereotype.Service;
@@ -48,5 +51,20 @@ public class LanguageFacade {
                 result.totalElements(),
                 result.totalPages()
         );
+    }
+
+    @Transactional
+    public LanguageDto update(UUID id, UpdateLanguageRequest request) {
+        var command = new UpdateLanguageCommand(
+                new LanguageCode(request.code()),
+                id,
+                new LanguageName(request.name())
+        );
+
+        try {
+            return LanguageDto.of(languageService.update(command));
+        } catch (LanguageNotFoundException ex) {
+            throw new ObjectNotFoundException(Language.class, id);
+        }
     }
 }
